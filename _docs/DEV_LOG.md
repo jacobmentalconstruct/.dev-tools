@@ -136,6 +136,119 @@ template.
 
 ---
 
+## 2026-04-11 — Prompt-lab reference pack and stale local toolbox purge
+
+- Added a portable SQLite reference pack to
+  `packages/_ollama-prompt-lab/artifacts/reference/`.
+- Curated the pack from the canonical vendable package, not from stale hidden
+  workspace residue.
+- Fixed `packages/_ollama-prompt-lab/jobs/examples/rubric_eval.json`, which was
+  missing its final closing brace and therefore was not valid JSON.
+- Included:
+  - canonical example jobs from `jobs/examples/`
+  - all non-dry-run prompt-lab runs present in the vendable package at build
+    time
+  - onboarding rows, manifest rows, structured run tables, and raw artifact
+    file payloads
+- Updated `_ollama-prompt-lab/README.md`, `artifacts/README.md`, and
+  `tool_manifest.json` so agents can discover the reference bundle without
+  guessing.
+- Purged the stale `.claude/.dev-tools` copy after packaging so the workspace
+  no longer carries a shadow toolbox tree that can confuse audits or
+  comparisons.
+- Left `.claude/settings.local.json` unchanged because it did not reference the
+  stale `.claude/.dev-tools` path and there was no obvious safe rewiring needed.
+
+Current state: canonical prompt-lab data now lives in the updated vendable
+package, and the stale hidden toolbox copy has been removed.
+
+---
+
+## 2026-04-11 — BuilderSET packed authority introduced
+
+- Added a new toolbox-resident packed authority surface under
+  `authorities/_builderset-authority/`.
+- Implemented a dedicated BuilderSET authority library in
+  `src/lib/builderset_authority.py`.
+- The new authority stores the live BuilderSET codex in a separate SQLite
+  artifact, distinct from the generic `authority.sqlite3`.
+- Packaged content is split into two classes:
+  - `runtime_executable` — BuilderSET runtime closure hydrated into
+    `.dev-tools/runtime/_builderset-authority/<build_id>/`
+  - `reference_only` — docs, smoke tests, finals, archives, outputs, and other
+    codex material kept queryable/exportable without default hydration
+- Added six builder tools for the packed authority lifecycle:
+  - `builderset_authority_build`
+  - `builderset_authority_manifest`
+  - `builderset_authority_query`
+  - `builderset_authority_prepare_runtime`
+  - `builderset_authority_export`
+  - `builderset_authority_launch`
+- Registered the new tools in `src/mcp_server.py`, `tool_manifest.json`, and
+  `toolbox_manifest.json`.
+- Documented the new authority in `README.md` and `authorities/README.md`.
+
+Current read: BuilderSET can now be packed into a toolbox-local SQLite
+authority with managed runtime hydration instead of relying on the live repo as
+the runtime surface.
+
+---
+
+## 2026-04-12 — Ollama prompt lab: 4 planned tools built
+
+- Built all 4 planned tools for `_ollama-prompt-lab`, completing Phase 2+3
+  of the package roadmap:
+  - `prompt_case_builder` — combinatorial test case generation with edge-case
+    seeding and default checks. Tested with 2-field x 2-value expansion
+    (4 combos + 1 edge case).
+  - `prompt_rubric_judge` — weighted rubric scoring via Ollama judge model.
+    Loads outputs from prior runs or inline, pipes to judge, parses JSON
+    scores, computes weighted averages.
+  - `prompt_diff_report` — baseline vs candidate run comparison. Aligns by
+    case+model, classifies as improved/regressed/unchanged, includes
+    unified text diffs.
+  - `agent_interview` — multi-turn scripted conversation with context
+    history, per-turn checks, and automatic follow-up on failed checks.
+- All 4 registered in tool_manifest.json and mcp_server.py (5 tools total).
+- Promoted from planned_tools to active tools in manifest.
+- Updated README.md and ROADMAP.md.
+
+Current state: 19 builder tools, 4 vendable packages (prompt lab now has
+5 tools), 1 vendable document template.
+
+---
+
+## 2026-04-13 — Six new builder tools: analysis, testing, introspection
+
+- Added 6 new builder tools to `src/tools/`:
+  - `file_tree_snapshot` — walks a project directory producing structured JSON
+    tree with file sizes, line counts, timestamps, and optional Python
+    docstrings. Respects `should_skip_dir`. Good for fast agent orientation.
+  - `smoke_test_runner` — meta-runner that discovers and executes all
+    `smoke_test.py` files across the toolbox and vendable packages.
+    Aggregates pass/fail with timing, supports per-test timeouts and
+    stop-on-failure.
+  - `python_complexity_scorer` — scores Python functions by cyclomatic
+    complexity, nesting depth, line count, and parameter count. Weighted
+    composite score identifies decomposition targets for
+    `module_decomp_planner`.
+  - `dead_code_finder` — AST cross-references all definitions (functions,
+    classes, imports) against usages across all files. Reports unused
+    definitions with type/file summaries. Respects entry point exclusions.
+  - `test_scaffold_generator` — AST-scans a Python source file, generates
+    pytest or unittest test stubs for every public function and method.
+    Handles async, class grouping, param hints, docstring hints.
+  - `schema_diff_tool` — compares two SQLite database schemas: added/dropped
+    tables, column changes, index changes, FK changes, row count deltas.
+    Migration planning companion to `sqlite_schema_inspector`.
+- All 6 registered in `tool_manifest.json` and `src/mcp_server.py`.
+- All 6 tested: metadata + real execution runs pass.
+
+Current state: 25 builder tools, 4 vendable packages, 1 vendable document
+template. All new tools follow the standard contract.
+
+---
+
 ## Template for future entries
 
 Journal entry: pending mirror

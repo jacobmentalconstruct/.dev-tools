@@ -13,15 +13,15 @@ coupling. If you move this folder, it still works.
 
 | If you are... | Read this first |
 |---------------|-----------------|
-| An agent entering for the first time | `toolbox_manifest.json` — the zero-context index |
+| An agent entering for the first time | `toolbox_manifest.json` → then `_docs/AGENT_GUIDE.md` |
 | A human wanting the full picture | This file, then `CONTRACT.md` and `VENDORING.md` |
-| An agent about to build a project | `CONTRACT.md` — the Builder Constraint Contract |
+| An agent about to build a project | `_docs/AGENT_GUIDE.md` — workflow loops and tool selection |
 | Looking to vend tools into a project | `VENDORING.md` — vendoring guide for all three tiers |
 | Looking for the dev history | `_docs/DEV_LOG.md` |
 
 ---
 
-## Three-Tier Architecture
+## Four-Surface Architecture
 
 ### Tier 1: Builder Tools (`src/tools/`)
 
@@ -49,12 +49,31 @@ these to work ON target projects without modifying the toolbox itself.
 | `sqlite_schema_inspector` | introspection | Inspect SQLite schema, tables, indexes, sample rows |
 | `import_graph_mapper` | analysis | Map Python import dependency graph with cycle detection |
 | `tkinter_widget_tree` | analysis | Map Tkinter widget hierarchy, geometry, and bindings |
+| `builderset_authority_build` | packaging | Build the packed BuilderSET authority DB from the live repo |
+| `builderset_authority_manifest` | introspection | Inspect the packed BuilderSET authority manifest and schema |
+| `builderset_authority_query` | introspection | Query packed BuilderSET files without hydrating them |
+| `builderset_authority_prepare_runtime` | runtime | Hydrate or reuse the packed BuilderSET runtime cache |
+| `builderset_authority_export` | export | Export selected packed BuilderSET files on demand |
+| `builderset_authority_launch` | runtime | Describe or probe packed BuilderSET launch surfaces |
 
 Every tool follows the same contract: `FILE_METADATA` dict + `run(arguments)`
 function + `standard_main()` CLI. See `CONTRACT.md` for the full mechanical
 specification.
 
-### Tier 2: Vendable Packages (`packages/`)
+### Tier 2: Packed Authorities (`authorities/`)
+
+Toolbox-resident codices that are preserved as SQLite artifacts and run from a
+managed runtime cache.
+
+| Authority | Purpose |
+|-----------|---------|
+| `_builderset-authority/` | Packed SQLite authority for BuilderSET with runtime/reference classes and cache-backed execution |
+
+See [`authorities/README.md`](authorities/README.md) for the overview and
+[`authorities/_builderset-authority/README.md`](authorities/_builderset-authority/README.md)
+for the BuilderSET-specific surface.
+
+### Tier 3: Vendable Packages (`packages/`)
 
 Self-contained subprojects that get **installed into** target projects. Each
 package has its own MCP server, CLI tools, smoke test, and documentation.
@@ -68,7 +87,7 @@ package has its own MCP server, CLI tools, smoke test, and documentation.
 
 See [`packages/README.md`](packages/README.md) for vendoring instructions.
 
-### Tier 3: Vendable Documents (`templates/`)
+### Tier 4: Vendable Documents (`templates/`)
 
 Project-agnostic templates and reference docs that can be copied into any new
 project as starting points.
@@ -110,7 +129,7 @@ run.bat          # Windows
 python src/mcp_server.py
 ```
 
-Exposes all 19 builder tools over MCP stdio transport.
+Exposes all 25 builder tools over MCP stdio transport.
 
 ## Self-Test
 
@@ -127,17 +146,27 @@ python src/smoke_test.py
    python src/tools/authority_build.py run --input-json "{}"
    ```
 
-2. **Install** the thin shim into a target project:
+2. **Build** the packed BuilderSET authority:
+   ```
+   python src/tools/builderset_authority_build.py run --input-json "{}"
+   ```
+
+3. **Hydrate** the BuilderSET runtime cache:
+   ```
+   python src/tools/builderset_authority_prepare_runtime.py run --input-json "{}"
+   ```
+
+4. **Install** the thin shim into a target project:
    ```
    python src/tools/authority_install.py run --input-json "{\"target_project_root\": \"C:\\path\\to\\project\"}"
    ```
 
-3. **Vend a package** by copying from `packages/` into the target project:
+5. **Vend a package** by copying from `packages/` into the target project:
    ```
    cp -r packages/_app-journal <target>/.dev-tools/_app-journal
    ```
 
-4. **Vend templates** by copying from `templates/` as needed.
+6. **Vend templates** by copying from `templates/` as needed.
 
 ---
 

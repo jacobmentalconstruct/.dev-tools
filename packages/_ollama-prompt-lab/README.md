@@ -26,7 +26,7 @@ Use this folder to:
 - `jobs/`
   - machine-run job specs
 - `artifacts/`
-  - transcripts, scores, summaries, comparisons
+  - transcripts, scores, summaries, comparisons, and portable reference data
 - `templates/`
   - prompt, rubric, and case templates
 - `sessions/`
@@ -46,16 +46,15 @@ Use this folder to:
 - `CONTRACT.md`
   - mechanical contract to keep across tools
 
-## Current Tooling
+## Tooling
 
-- `ollama_prompt_lab`
-
-## Planned Next Tools
-
-- `prompt_case_builder`
-- `prompt_rubric_judge`
-- `prompt_diff_report`
-- `agent_interview`
+| Tool | Category | Purpose |
+|------|----------|---------|
+| `ollama_prompt_lab` | evaluation | Run prompt variants against Ollama models with deterministic checks and optional rubric judging |
+| `prompt_case_builder` | evaluation | Generate structured test case files from field definitions, value sets, and edge-case seeds |
+| `prompt_rubric_judge` | evaluation | Score prior run outputs against a weighted rubric using a local Ollama judge model |
+| `prompt_diff_report` | reporting | Compare outputs across two runs: regressions, improvements, diffs |
+| `agent_interview` | evaluation | Run a scripted multi-turn interview to test context retention and constraint following |
 
 ## Standard CLI Contract
 
@@ -86,6 +85,20 @@ python _ollama-prompt-lab\tools\ollama_prompt_lab.py run --input-file _ollama-pr
 ```
 
 This writes a timestamped artifact folder under `_ollama-prompt-lab\artifacts\runs\`.
+
+## Portable Reference DB
+
+This package also ships a curated SQLite reference pack for reusable prompt-eval
+history:
+
+- `artifacts/reference/prompt_eval_reference.sqlite3`
+- `artifacts/reference/prompt_eval_reference_manifest.json`
+- `artifacts/reference/README.md`
+
+The reference DB is intended for agent onboarding and cross-project reuse. It
+keeps canonical example jobs plus curated non-dry-run historical prompt-eval
+artifacts in a queryable form without requiring agents to walk every run folder
+by hand.
 
 ## Isolation Rule
 

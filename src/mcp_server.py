@@ -99,6 +99,66 @@ try:
 except ImportError:
     TKINTER_TREE_METADATA, run_tkinter_widget_tree = None, None
 
+try:
+    from tools.file_tree_snapshot import FILE_METADATA as FILE_TREE_METADATA, run as run_file_tree_snapshot
+except ImportError:
+    FILE_TREE_METADATA, run_file_tree_snapshot = None, None
+
+try:
+    from tools.smoke_test_runner import FILE_METADATA as SMOKE_RUNNER_METADATA, run as run_smoke_test_runner
+except ImportError:
+    SMOKE_RUNNER_METADATA, run_smoke_test_runner = None, None
+
+try:
+    from tools.python_complexity_scorer import FILE_METADATA as COMPLEXITY_METADATA, run as run_python_complexity_scorer
+except ImportError:
+    COMPLEXITY_METADATA, run_python_complexity_scorer = None, None
+
+try:
+    from tools.dead_code_finder import FILE_METADATA as DEAD_CODE_METADATA, run as run_dead_code_finder
+except ImportError:
+    DEAD_CODE_METADATA, run_dead_code_finder = None, None
+
+try:
+    from tools.test_scaffold_generator import FILE_METADATA as TEST_SCAFFOLD_METADATA, run as run_test_scaffold_generator
+except ImportError:
+    TEST_SCAFFOLD_METADATA, run_test_scaffold_generator = None, None
+
+try:
+    from tools.schema_diff_tool import FILE_METADATA as SCHEMA_DIFF_METADATA, run as run_schema_diff_tool
+except ImportError:
+    SCHEMA_DIFF_METADATA, run_schema_diff_tool = None, None
+
+try:
+    from tools.builderset_authority_build import FILE_METADATA as BUILDERSET_BUILD_METADATA, run as run_builderset_authority_build
+except ImportError:
+    BUILDERSET_BUILD_METADATA, run_builderset_authority_build = None, None
+
+try:
+    from tools.builderset_authority_manifest import FILE_METADATA as BUILDERSET_MANIFEST_METADATA, run as run_builderset_authority_manifest
+except ImportError:
+    BUILDERSET_MANIFEST_METADATA, run_builderset_authority_manifest = None, None
+
+try:
+    from tools.builderset_authority_query import FILE_METADATA as BUILDERSET_QUERY_METADATA, run as run_builderset_authority_query
+except ImportError:
+    BUILDERSET_QUERY_METADATA, run_builderset_authority_query = None, None
+
+try:
+    from tools.builderset_authority_prepare_runtime import FILE_METADATA as BUILDERSET_RUNTIME_METADATA, run as run_builderset_authority_prepare_runtime
+except ImportError:
+    BUILDERSET_RUNTIME_METADATA, run_builderset_authority_prepare_runtime = None, None
+
+try:
+    from tools.builderset_authority_export import FILE_METADATA as BUILDERSET_EXPORT_METADATA, run as run_builderset_authority_export
+except ImportError:
+    BUILDERSET_EXPORT_METADATA, run_builderset_authority_export = None, None
+
+try:
+    from tools.builderset_authority_launch import FILE_METADATA as BUILDERSET_LAUNCH_METADATA, run as run_builderset_authority_launch
+except ImportError:
+    BUILDERSET_LAUNCH_METADATA, run_builderset_authority_launch = None, None
+
 
 SERVER_INFO = {"name": "project-authority-kit", "version": "2.0.0"}
 
@@ -124,6 +184,18 @@ for meta, runner in [
     (SQLITE_INSPECTOR_METADATA, run_sqlite_schema_inspector),
     (IMPORT_GRAPH_METADATA, run_import_graph_mapper),
     (TKINTER_TREE_METADATA, run_tkinter_widget_tree),
+    (FILE_TREE_METADATA, run_file_tree_snapshot),
+    (SMOKE_RUNNER_METADATA, run_smoke_test_runner),
+    (COMPLEXITY_METADATA, run_python_complexity_scorer),
+    (DEAD_CODE_METADATA, run_dead_code_finder),
+    (TEST_SCAFFOLD_METADATA, run_test_scaffold_generator),
+    (SCHEMA_DIFF_METADATA, run_schema_diff_tool),
+    (BUILDERSET_BUILD_METADATA, run_builderset_authority_build),
+    (BUILDERSET_MANIFEST_METADATA, run_builderset_authority_manifest),
+    (BUILDERSET_QUERY_METADATA, run_builderset_authority_query),
+    (BUILDERSET_RUNTIME_METADATA, run_builderset_authority_prepare_runtime),
+    (BUILDERSET_EXPORT_METADATA, run_builderset_authority_export),
+    (BUILDERSET_LAUNCH_METADATA, run_builderset_authority_launch),
 ]:
     if meta is not None and runner is not None:
         TOOL_REGISTRY[meta["mcp_name"]] = (meta, runner)

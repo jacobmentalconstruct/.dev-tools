@@ -7,6 +7,10 @@ HOW TO USE:
   - Connect as a stdio MCP server from an MCP-capable client.
 TOOLS:
   - ollama_prompt_lab
+  - prompt_case_builder
+  - prompt_rubric_judge
+  - prompt_diff_report
+  - agent_interview
 """
 
 from __future__ import annotations
@@ -22,6 +26,10 @@ if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
 from tools.ollama_prompt_lab import FILE_METADATA as OLLAMA_PROMPT_LAB_METADATA, run as run_ollama_prompt_lab
+from tools.prompt_case_builder import FILE_METADATA as CASE_BUILDER_METADATA, run as run_prompt_case_builder
+from tools.prompt_rubric_judge import FILE_METADATA as RUBRIC_JUDGE_METADATA, run as run_prompt_rubric_judge
+from tools.prompt_diff_report import FILE_METADATA as DIFF_REPORT_METADATA, run as run_prompt_diff_report
+from tools.agent_interview import FILE_METADATA as INTERVIEW_METADATA, run as run_agent_interview
 
 
 SERVER_INFO = {
@@ -31,6 +39,10 @@ SERVER_INFO = {
 
 TOOL_REGISTRY = {
     OLLAMA_PROMPT_LAB_METADATA["mcp_name"]: (OLLAMA_PROMPT_LAB_METADATA, run_ollama_prompt_lab),
+    CASE_BUILDER_METADATA["mcp_name"]: (CASE_BUILDER_METADATA, run_prompt_case_builder),
+    RUBRIC_JUDGE_METADATA["mcp_name"]: (RUBRIC_JUDGE_METADATA, run_prompt_rubric_judge),
+    DIFF_REPORT_METADATA["mcp_name"]: (DIFF_REPORT_METADATA, run_prompt_diff_report),
+    INTERVIEW_METADATA["mcp_name"]: (INTERVIEW_METADATA, run_agent_interview),
 }
 
 

@@ -4,8 +4,10 @@
   "description": "Universal agent-first toolbox with builder tools, vendable packages, and vendable document templates. Project-agnostic by design.",
   "zero_context_protocol": [
     "Read toolbox_manifest.json first.",
-    "Choose from builder_tools or vendable_packages based on the task.",
-    "Open the chosen area's tool_manifest.json and README.md.",
+    "Read _docs/AGENT_GUIDE.md for workflow loops, tool selection, and token efficiency patterns.",
+    "Run journal_query to pick up context from the last session.",
+    "Run constraint_query with your task profile to load relevant rules.",
+    "Choose from builder_tools, packed_authorities, or vendable_packages based on the task.",
     "Ignore _Possible_Intake unless explicitly requested."
   ],
   "tiers": {
@@ -14,6 +16,21 @@
       "manifest": "tool_manifest.json",
       "mcp_entrypoint": "src/mcp_server.py",
       "readme": "README.md"
+    },
+    "packed_authorities": {
+      "description": "Toolbox-resident packed codices that run from SQLite-backed artifacts with managed cache hydration.",
+      "path": "authorities",
+      "readme": "authorities/_builderset-authority/README.md",
+      "authorities": [
+        {
+          "name": "_builderset-authority",
+          "path": "authorities/_builderset-authority",
+          "purpose": "Packed SQLite authority for AgenticToolboxBuilderSET with runtime/reference content classes and cache-backed execution.",
+          "manifest": "authorities/_builderset-authority/artifacts/builderset_authority_manifest.json",
+          "readme": "authorities/_builderset-authority/README.md",
+          "preferred_for": ["BuilderSET runtime hydration", "packed MCP operation", "codex export without live repo dependency"]
+        }
+      ]
     },
     "vendable_packages": {
       "description": "Self-contained subprojects that get installed INTO target projects.",

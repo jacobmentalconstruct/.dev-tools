@@ -152,6 +152,78 @@
       "script": "src/tools/tkinter_widget_tree.py",
       "mcp_name": "tkinter_widget_tree",
       "category": "analysis"
+    },
+    {
+      "tool_name": "file_tree_snapshot",
+      "script": "src/tools/file_tree_snapshot.py",
+      "mcp_name": "file_tree_snapshot",
+      "category": "introspection"
+    },
+    {
+      "tool_name": "smoke_test_runner",
+      "script": "src/tools/smoke_test_runner.py",
+      "mcp_name": "smoke_test_runner",
+      "category": "testing"
+    },
+    {
+      "tool_name": "python_complexity_scorer",
+      "script": "src/tools/python_complexity_scorer.py",
+      "mcp_name": "python_complexity_scorer",
+      "category": "analysis"
+    },
+    {
+      "tool_name": "dead_code_finder",
+      "script": "src/tools/dead_code_finder.py",
+      "mcp_name": "dead_code_finder",
+      "category": "analysis"
+    },
+    {
+      "tool_name": "test_scaffold_generator",
+      "script": "src/tools/test_scaffold_generator.py",
+      "mcp_name": "test_scaffold_generator",
+      "category": "scaffold"
+    },
+    {
+      "tool_name": "schema_diff_tool",
+      "script": "src/tools/schema_diff_tool.py",
+      "mcp_name": "schema_diff_tool",
+      "category": "introspection"
+    },
+    {
+      "tool_name": "builderset_authority_build",
+      "script": "src/tools/builderset_authority_build.py",
+      "mcp_name": "builderset_authority_build",
+      "category": "packaging"
+    },
+    {
+      "tool_name": "builderset_authority_manifest",
+      "script": "src/tools/builderset_authority_manifest.py",
+      "mcp_name": "builderset_authority_manifest",
+      "category": "introspection"
+    },
+    {
+      "tool_name": "builderset_authority_query",
+      "script": "src/tools/builderset_authority_query.py",
+      "mcp_name": "builderset_authority_query",
+      "category": "introspection"
+    },
+    {
+      "tool_name": "builderset_authority_prepare_runtime",
+      "script": "src/tools/builderset_authority_prepare_runtime.py",
+      "mcp_name": "builderset_authority_prepare_runtime",
+      "category": "runtime"
+    },
+    {
+      "tool_name": "builderset_authority_export",
+      "script": "src/tools/builderset_authority_export.py",
+      "mcp_name": "builderset_authority_export",
+      "category": "export"
+    },
+    {
+      "tool_name": "builderset_authority_launch",
+      "script": "src/tools/builderset_authority_launch.py",
+      "mcp_name": "builderset_authority_launch",
+      "category": "runtime"
     }
   ]
 }

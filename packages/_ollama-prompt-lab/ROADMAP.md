@@ -1,19 +1,19 @@
 # Roadmap
 
-## Phase 1
+## Phase 1 (complete)
 
 - add shared runtime helpers
 - add a model-runner wrapper for Ollama CLI or HTTP
 - define prompt/case/rubric JSON schemas
 - create tiny fixture cases and prompt variants
 
-## Phase 2
+## Phase 2 (complete)
 
 - build `ollama_prompt_lab`
 - build `prompt_case_builder`
 - build `prompt_rubric_judge`
 
-## Phase 3
+## Phase 3 (complete)
 
 - build `prompt_diff_report`
 - build `agent_interview`
